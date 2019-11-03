@@ -11,36 +11,13 @@
     <title>New Reddit</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" >
-    <a class="navbar-brand" href="#">Fixed navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-        </ul>
-        <form class="form-inline mt-2 mt-md-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-
-</nav>
+<div th:insert="\template\header :: navbar"></div>
 <div style="width: 70rem; margin: auto; margin-top: 5rem">
 
 <div class="alert alert-danger" role="alert" th:if="${error}">
     Введены неправильные данные
 </div>
-<form action="login/process" method="post">
+<form action="login/process" method="post" autocomplete="off">
     <div class="form-group">
         <label for="exampleInputEmail1">Введите логин или адрес электронной почты:</label>
         <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" >
@@ -49,7 +26,12 @@
         <label for="exampleInputPassword1">Пароль:</label>
         <input type="password" class="form-control" id="exampleInputPassword1" name="password">
     </div>
-    <button type="submit" class="btn btn-primary">Войти</button>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+        <a href="/sign_up"  style="margin-left: 1rem">Зарегистрироваться</a>
+
+    </div>
 </form>
 </div>
 <!-- Optional JavaScript -->

@@ -2,6 +2,7 @@ package spring_information_portal.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -10,9 +11,10 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique=true)
     private String name;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
     private List<Post> posts;
 
     public Tag() {
@@ -51,5 +53,13 @@ public class Tag {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public static Iterable<Tag> createTags(Collection<String> names){
+        Collection<Tag> tags = new ArrayList<>();
+        for (String name : names){
+            tags.add(new Tag(name));
+        }
+        return tags;
     }
 }

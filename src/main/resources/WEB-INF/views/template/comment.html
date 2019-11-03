@@ -1,0 +1,15 @@
+<div  class="card comment" style="width: 50rem;margin: auto;"  th:fragment="comment" xmlns:th="http://www.w3.org/1999/xhtml" th:data-id="${comment.id}">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+        <p class="card-title" > <button class="rateComment" th:data-id="${comment.id}" th:classappend="${comment.isRated} ? rated : unrated" th:disabled="${isLogin} ? false : true"> <i class="fas fa-plus"></i> </button> Рейтинг: <span class="rate" th:text="${comment.rate}"></span></p>
+        <p class="card-title font-weight-bold" th:text="${comment.author}"> Name </p>
+            <p class="card-text postDate" >Опубликован: <span th:text="${comment.date}" class="timeAgo"></span> назад.</p>
+        </div>
+        <p class="card-text" th:text="${comment.text}"> Text </p>
+
+
+
+
+    </div>
+
+</div>

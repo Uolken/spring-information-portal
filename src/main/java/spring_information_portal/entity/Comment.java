@@ -1,6 +1,8 @@
 package spring_information_portal.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -9,16 +11,26 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
     private String text;
     private Date date;
-    private long rate;
+    private Long rate;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "comment_rated_by_user",
+            uniqueConstraints={
+                    @UniqueConstraint(columnNames = {"comment_id", "user_id"})
+            },
+            joinColumns = @JoinColumn(name = "comment_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Collection<User> userRate;
 
     public Comment(Post post, User user, String text, Date date, long rate) {
         this.post = post;
@@ -29,6 +41,7 @@ public class Comment {
     }
 
     public Comment() {
+        this.userRate = new ArrayList<>();
     }
 
     public Long getId() {
@@ -77,5 +90,13 @@ public class Comment {
 
     public void setRate(long rate) {
         this.rate = rate;
+    }
+
+    public Collection<User> getUserRate() {
+        return userRate;
+    }
+
+    public void setUserRate(Collection<User> userRate) {
+        this.userRate = userRate;
     }
 }

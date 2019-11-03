@@ -25,9 +25,22 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Comment> comments;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "userRate")
+    private List<Post> likedPosts;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "userRate")
+    private List<Comment> likedComm;
+
+
     public User() {
         this.posts = new ArrayList<>();
         this.comments = new ArrayList<>();
+        this.likedPosts = new ArrayList<>();
+        this.likedComm = new ArrayList<>();
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     public User(String login, String password, String mail, UserRole role) {
@@ -101,5 +114,21 @@ public class User {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<Post> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public void setLikedPosts(List<Post> likedPosts) {
+        this.likedPosts = likedPosts;
+    }
+
+    public List<Comment> getLikedComm() {
+        return likedComm;
+    }
+
+    public void setLikedComm(List<Comment> likedComm) {
+        this.likedComm = likedComm;
     }
 }

@@ -1,0 +1,19 @@
+.unrated {
+  color: gray;
+
+}
+.rated{
+  color: green;
+
+}
+.ratePost{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+.rateDiv{
+    align-items: center;
+}

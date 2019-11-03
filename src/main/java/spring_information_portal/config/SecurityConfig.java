@@ -21,8 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/sign_up", "/login").anonymous()
-                .antMatchers("/home").authenticated()
-                .antMatchers("admin").hasRole("admin")
+                .antMatchers("/create_post").authenticated()
+                .antMatchers("/logout").authenticated()
+                .antMatchers("/post/rate/*").authenticated()
+                .antMatchers("/home").permitAll()
+                .antMatchers("/admin").hasAuthority("ADMIN")
+                .antMatchers("/moder").hasAuthority("MODERATOR")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
@@ -31,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout();
 
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

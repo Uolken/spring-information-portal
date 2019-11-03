@@ -1,0 +1,20 @@
+<div class="card mb-4 post" style="width: 50rem;margin: auto;" th:fragment="post" xmlns:th="http://www.w3.org/1999/xhtml" th:data-id="${post.id}">
+    <div class="card-body">
+
+        <a th:href="'/post/' + ${post.id}"><h5 class="card-title" th:text="${post.name}"> Name </h5></a>
+        <p class="card-text" th:text="${post.text}"> Text </p>
+        <img  th:if="${post.imgId} != -1" th:src="'/myImg/' + ${post.imgId}" class="card-img">
+        <p class="card-text">Теги: <span th:each="tag : ${post.tags}"><a th:text="${tag.name}" th:href="'/search_page?requestString=&tagNames='+${tag.name}" class="badge badge-info"></a></span> </p>
+    </div>
+    <div class="card-footer">
+        <div class="d-flex rateDiv">
+            <button class="ratePost" th:data-id="${post.id}" th:classappend="${post.isRated} ? rated : unrated" th:disabled="${isLogin} ? false : true"> <i class="fas fa-plus"></i> </button> <div> Рейтинг: <span th:text="${post.rate}" class="rate"></span> </span></div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="card-text postDate" >Опубликован: <span th:text="${post.date}" class="timeAgo"></span> назад.</p>
+            <p class="card-text">Автор: <span th:text="${post.author.login}"></span></p>
+        </div>
+
+
+    </div>
+</div>

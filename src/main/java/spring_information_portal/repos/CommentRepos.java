@@ -6,4 +6,5 @@ import spring_information_portal.entity.Comment;
 
 @Repository
 public interface CommentRepos extends CrudRepository<Comment, Long> {
+    public Comment getById(Long id);
 }

@@ -44,7 +44,7 @@ public class DataConfig {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "spring_information_portal.entity" });
+        em.setPackagesToScan("spring_information_portal.entity");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -65,10 +65,13 @@ public class DataConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    Properties additionalProperties() {
+    private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
+        properties.setProperty("hibernate.connection.useUnicode", "true");
+        properties.setProperty("hibernate.connection.characterEncoding", "UTF-8");
+        properties.setProperty("hibernate.connection.charSet", "UTF-8");
 
         return properties;
     }
