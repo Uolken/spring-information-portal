@@ -1,7 +1,9 @@
 package spring_information_portal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spring_information_portal.entity.User;
 import spring_information_portal.repos.UserRepos;
 
@@ -9,6 +11,9 @@ import spring_information_portal.repos.UserRepos;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepos userRepos;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public User getById(Long id) {
@@ -26,7 +31,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepos.save(user);
     }
 

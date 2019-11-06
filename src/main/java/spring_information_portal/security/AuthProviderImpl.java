@@ -1,6 +1,7 @@
 package spring_information_portal.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,6 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import spring_information_portal.tool.MailValidator;
 import spring_information_portal.entity.User;
@@ -21,6 +24,9 @@ import java.util.List;
 public class AuthProviderImpl implements AuthenticationProvider {
     @Autowired
     UserService userService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -36,7 +42,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
         }
 
         String password = authentication.getCredentials().toString();
-        if (!password.equals(user.getPassword())){
+        if (!(passwordEncoder.matches(password, user.getPassword())))   {
             throw new BadCredentialsException("Bad credential");
         }
         List<GrantedAuthority> authorities= new ArrayList<>();
@@ -47,5 +53,10 @@ public class AuthProviderImpl implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> aClass) {
         return aClass.equals(UsernamePasswordAuthenticationToken.class);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

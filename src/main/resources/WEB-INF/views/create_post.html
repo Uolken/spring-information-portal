@@ -20,15 +20,15 @@
     <div class="card" style="width: 50rem;margin: auto;">
         <div class="card-body">
             <form action="create_post" method="post" autocomplete="off" enctype="multipart/form-data">
-                <h3 class="card-title" >Заголовок: <input type="text" name="name"/></h3>
+                <h3 class="card-title" >Заголовок: <input type="text" name="name" required/></h3>
                 <p class="card-text">
                     <div class="form-group">
                         <label for="Textarea1">Содержание</label>
-                        <textarea class="form-control" id="Textarea1" rows="10" name="text"></textarea>
+                        <textarea class="form-control" id="Textarea1" rows="10" name="text" required></textarea>
                     </div>
                 Изображение: <input type="file" name="file">
                 </p>
-                Теги: <input type="text" data-role="tagsinput" name="tags">
+                Теги: <input type="text" data-role="tagsinput" name="tags" required>
                 <div>
                     <button type="submit" class="btn btn-primary">Создать</button>
                 </div>
